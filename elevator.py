@@ -2,11 +2,16 @@ import random
 
 '''
 ASSUMPTIONS:
-    - Max number of floors is 100
+    - The user is starting on floor 1
+    - Max number of floors is 20
     - 1-indexing user and elevator floors for clarity
+    - The elevator is being used by others in the building, therefore its floor is random when called
+TODOS:
+    - More specifically simulating other people using the elevator
+    - Have multiple elevators in the building and allow a user to select which one they want to use
 '''
 
-
+# ASCII for the visualizations in the program
 def elevator_door(floor_number): 
     door = f'''
   ______________
@@ -30,11 +35,12 @@ ______________
       {user}
 ______________\n
 '''
-    for i in range (1, NUM_FLOORS+1):
-        buttons += f"[{i:02}] "
-        if i % 3 == 0:
+    for i in range (1, NUM_FLOORS+1):   # Base the number of buttons on the total available number of floors
+        buttons += f"[{i:02}] " # Use :02 to display a 0 in front of 1-digit numbers for consistent spacing
+        if i % 3 == 0:  # Add a new line every 3 buttons
             buttons += "\n"
     print(buttons)
+
 
 # Function simulating the elevator running and being available at all times.
 def run_elevator(user, elev, NUM_FLOORS):
@@ -55,6 +61,7 @@ def run_elevator(user, elev, NUM_FLOORS):
         else:   # Only accept the call or quit as valid input
             print("Invalid input. Please type 'c' to call the elevator, or 'q' if you would like to quit the program\n")
 
+# Function handles displaying the elevator buttons and user selecting their floor
 def call_elevator(user, elev, NUM_FLOORS):
     while True:
         elevator_buttons(user, NUM_FLOORS)
@@ -63,12 +70,15 @@ def call_elevator(user, elev, NUM_FLOORS):
             sel_floor = int(sel_floor)
             if 1 <= sel_floor <= NUM_FLOORS:
                 break
-            else:
+            else:   # Handles a user selecting an int but it being out of the valid range
                 print(f"You've selected an invalid floor number. Please select a floor between 1 and {NUM_FLOORS}\n")
-        except ValueError:
+        except ValueError:  # Handles a user inputting something other than an int
             print("Invalid input. Please select a floor number")
 
     print(f"The elevator comes to floor {user}, you get in and it takes you to floor {sel_floor}. Have a nice time here!\n")
+    # Setting the elevator and user to the selected floor
+    # This is undone for 'elev' by calling run_elevator and having a random floor selected,
+    # but maintains the accuracy of the simulation in case a different functionality is wanted later
     elev = sel_floor
     user = sel_floor
 
@@ -76,7 +86,7 @@ def call_elevator(user, elev, NUM_FLOORS):
     run_elevator(user, elev, NUM_FLOORS)
 
 def main():
-    user = 1
+    user = 1 # User starts on floor 1, as if they have just entered the building
     MAX_FLOORS = 20
     NUM_FLOORS = random.randint(2, MAX_FLOORS)
     elev = random.randint(1, NUM_FLOORS)
