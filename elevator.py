@@ -6,12 +6,41 @@ ASSUMPTIONS:
     - 1-indexing user and elevator floors for clarity
 '''
 
+
+def elevator_door(floor_number): 
+    door = f'''
+  ______________
+ /      {floor_number}       \\
+|________________|
+ ________________
+|       ||       |
+|       ||       |
+|       ||       |
+|       ||       |
+|       ||       |
+|       ||       |
+|_______||_______|
+
 '''
-Function simulating the elevator running and being available at all times.
+    print(door)
+
+def elevator_buttons(user, NUM_FLOORS):
+    buttons = f'''
+______________
+      {user}
+______________\n
 '''
+    for i in range (1, NUM_FLOORS+1):
+        buttons += f"[{i:02}] "
+        if i % 3 == 0:
+            buttons += "\n"
+    print(buttons)
+
+# Function simulating the elevator running and being available at all times.
 def run_elevator(user, elev, NUM_FLOORS):
     # Simulate another person using the elevator and leaving it on a random floor
     elev = random.randint(1, NUM_FLOORS)
+    elevator_door(elev)
     print(f"Someone has left the elevator on floor {elev}")
 
     # Keep the elevator ready to be called
@@ -28,6 +57,7 @@ def run_elevator(user, elev, NUM_FLOORS):
 
 def call_elevator(user, elev, NUM_FLOORS):
     while True:
+        elevator_buttons(user, NUM_FLOORS)
         sel_floor = input(f"The elevator has been called from floor {elev} to you on floor {user}. Which floor would you like to go to? (1 - {NUM_FLOORS})\n")
         try:
             sel_floor = int(sel_floor)
@@ -47,7 +77,7 @@ def call_elevator(user, elev, NUM_FLOORS):
 
 def main():
     user = 1
-    MAX_FLOORS = 100
+    MAX_FLOORS = 20
     NUM_FLOORS = random.randint(2, MAX_FLOORS)
     elev = random.randint(1, NUM_FLOORS)
     print(f"\nYou walk up to the elevator in the {NUM_FLOORS} story building and go to the elevator")
