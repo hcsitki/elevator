@@ -1,6 +1,10 @@
-import random
-
 '''
+HUNTER SITKI
+The Elevator
+
+Written for Bluestaq Code Challenge
+
+
 ASSUMPTIONS:
     - The user is starting on floor 1
     - Max number of floors is 20
@@ -9,7 +13,10 @@ ASSUMPTIONS:
 TODOS:
     - More specifically simulating other people using the elevator
     - Have multiple elevators in the building and allow a user to select which one they want to use
+    - Add a chance for a random Emergency Event and an elevator button that will call out for help
 '''
+
+import random
 
 # ASCII for the visualizations in the program
 def elevator_door(floor_number): 
